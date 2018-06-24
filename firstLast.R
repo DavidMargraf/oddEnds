@@ -1,9 +1,9 @@
-# Functions to find the first, and/or last observations 
+# Functions to flag the first, and/or last observations 
 #  based on a particular key variable such as ID number.
 first <- function(x, key){
   a <- deparse(substitute(x))
   b <- deparse(substitute(key))
-  nam <- make.names(paste0("first.", b))
+  nam <- paste0("first.", b)
   nam2 <- paste0(a,"$", b)
   c <- eval(parse(text = nam2))
   d <- as.numeric(!duplicated(c))
@@ -13,7 +13,7 @@ first <- function(x, key){
 last <- function(x, key){
   a <- deparse(substitute(x))
   b <- deparse(substitute(key))
-  nam <- make.names(paste0("last.", b))
+  nam <- paste0("last.", b)
   nam2 <- paste0(a,"$", b)
   c <- eval(parse(text = nam2))
   d <- as.numeric(!duplicated(c, fromLast = T))
@@ -24,7 +24,7 @@ firstLast <- function(x, key){
   # first observation
   a <- deparse(substitute(x))
   b <- deparse(substitute(key))
-  nam <- make.names(paste0("first.", b))
+  nam <- paste0("first.", b)
   nam2 <- paste0(a,"$", b)
   c <- eval(parse(text = nam2))
   d <- as.numeric(!duplicated(c))
@@ -33,7 +33,7 @@ firstLast <- function(x, key){
   # last observation
   e <- deparse(substitute(x))
   f <- deparse(substitute(key))
-  nam3 <- make.names(paste0("last.", f))
+  nam3 <- paste0("last.", f)
   nam4 <- paste0(a,"$", f)
   g <- eval(parse(text = nam4))
   h <- as.numeric(!duplicated(g, fromLast = T))
@@ -42,6 +42,10 @@ firstLast <- function(x, key){
 
 # Example code
 df <-data.frame(id=rep(seq(10), each=10), thing = rep(c("A","B")))
+df
+
+library(dplyr)
+df <- df %>% mutate(first.id) %>% filter(first.id==1)
 df
 
 first(df, id)
